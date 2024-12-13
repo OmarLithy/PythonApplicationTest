@@ -40,25 +40,25 @@ def _parse_header_line(line, min_values, widths, types, names):
     :param types: field types 1=string, 2=int, 3=float, -1=ignore the field
     :param names: a list of key (field) names
     """
-    fields = {}
-    n_fields_req = len(names)
-    fields_from_line = []
-    fields_out = {}
+    fields = {} #
+    n_fields_req = len(names)# 
+    fields_from_line = []#
+    fields_out = {}#
 
     # Extend the line if shorter than 80 chars
-    ll = len(line)
-    if ll < 80:
-        line = line + ' ' * (80 - ll)
+    ll = len(line)#
+    if ll < 80:#
+        line = line + ' ' * (80 - ll)#
     # Parse the line for fields
     si = 0
-    for n in range(0, len(widths)):
-        fields_from_line.append(line[si:si + widths[n]].strip())
-        si += widths[n]
+    for n in range(0, len(widths)):#
+        fields_from_line.append(line[si:si + widths[n]].strip())#
+        si += widths[n]#
     # Check for the number of fields,...
-    n_fields = len(fields_from_line)
+    n_fields = len(fields_from_line)#
     if (n_fields_req < n_fields) or (min_values > n_fields):
         raise Exception('Error parsing header section; too many or to less' + \
-                            'fields found')
+                            'fields found')#
     # Mandatory fields
     for key, n in zip(names[:min_values], range(0, min_values)):
         if types[n] == -1:
@@ -68,7 +68,7 @@ def _parse_header_line(line, min_values, widths, types, names):
         elif types[n] == 2:
             fields_out.update({key: int(fields_from_line[n])})
         else:
-            fields_out.update({key: float(fields_from_line[n])})
+            fields_out.update({key: float(fields_from_line[n])})#
     # Optional fields
     for key, n in zip(names[min_values:n_fields], range(min_values, n_fields)):
         try:
