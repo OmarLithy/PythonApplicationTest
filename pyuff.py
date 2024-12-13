@@ -882,6 +882,7 @@ uff_file=UFF('datasets/Test.uff')
 
 data = uff_file.read_sets()
 
-print(data[4]['x'], data[4]['data'])
+print(data[4]['x'], data[4]['data'],data[4]['func_type'])
+dset = {'type': 58, 'binary': 0}
 if __name__ == '__main__':
     pass
