@@ -825,59 +825,6 @@ class UFF:
             pass
         return dset
 
-    def _write_set(self, dset, mode='add', force_double=True):
-        """
-        Writes UFF data (UFF data-sets) to the file.  The mode can be
-        either 'add' (default) or 'overwrite'. The dset is a
-        dictionary of keys and corresponding values. Unsupported
-        data-set will be ignored.
-         
-        For each data-set, there are some optional and some required fields at
-        dset dictionary. Also, in general, the sum of the required
-        and the optional fields together can be less then the number of fields
-        read from the same type of data-set; the reason is that for some
-        data-sets some fields are set automatically. Optional fields are
-        calculated automatically and the dset is updated - as dset is actually
-        an alias (aka pointer), this is reflected at the caller too.
-        
-        """
-        if mode.lower() == 'overwrite':
-            # overwrite mode
-            try:
-                fh = open(self._filename, 'wt')
-            except:
-                raise Exception('Cannot access the file: ' + self._filename + ' to write to.')
-        elif mode.lower() == 'add':
-            # add (append) mode
-            try:
-                fh = open(self._filename, 'at')
-            except:
-                raise Exception('Cannot access the file: ' + self._filename + ' to write to.')
-        else:
-            raise Exception('Unknown mode: ' + mode)
-        try:
-            # Actual writing
-            try:
-                set_type = dset['type']
-            except:
-                fh.close()
-                raise Exception('Data-set\'s dictionary is missing the required \'type\' key')
-            # handle nan or inf
-            if 'data' in dset.keys():
-                dset['data'] = np.nan_to_num(dset['data'])
-
-            if set_type == 58:
-                _write58(fh, dset, mode, _filename=self._filename, force_double=force_double)
-            else:
-                # Unsupported data-set - do nothing
-                pass
-        except:
-            fh.close()
-            raise  # re-raise the last exception
-        else:
-            fh.close()
-        self.refresh()
-
 uff_file=UFF('datasets/Test.uff')
 
 data = uff_file.read_sets()
