@@ -14,7 +14,6 @@ def _opt_fields(dict, fields_dict):
     :param dict: dictionary to be updated
     :param fields_dict: dictionary with default values
     """
-
     for key in fields_dict:
         #             if not dict.has_key(key):
         if not key in dict:
